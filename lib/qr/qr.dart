@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,6 +31,7 @@ class _qrscannerState extends State<qrscanner> {
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           child: Stack(
             children: [
+              //
               QRView(key: qrKey, onQRViewCreated: _onQRViewCreated),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -152,7 +152,7 @@ class _qrscannerState extends State<qrscanner> {
                             )
                         : const Text(
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                             "Scan a code"),
@@ -168,7 +168,7 @@ class _qrscannerState extends State<qrscanner> {
                         ? ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                                  const Color.fromARGB(209, 16, 28, 36),
+                                  const Color.fromARGB(156, 0, 0, 0),
                               shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)
@@ -204,12 +204,13 @@ class _qrscannerState extends State<qrscanner> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
-    controller = controller;
+    this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
       });
     });
+    // Initialize the torch state
   }
 
   _urlLaunch(String string) async {
