@@ -43,51 +43,136 @@ class _qrscannerState extends State<qrscanner> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text("Place the QR code below"),
-              Container(
-                height: 300,
-                width: 300,
-                color: Colors.black,
-                child: QRView(key: qrKey, onQRViewCreated: _onQRViewCreated),
+              const Column(
+                children: [
+                  Text(
+                      style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                      "Position QR Code Below"),
+                  Text(
+                      style: TextStyle(
+                          fontSize: 17,
+                          // fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                      "Align the scanner for auto QR scan."),
+                ],
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  height: 300,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    // border: Border.all(
+                    //   color: Colors.white,
+                    //   width: 2,
+                    // ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Stack(
+                    children: [
+                      QRView(key: qrKey, onQRViewCreated: _onQRViewCreated),
+                      Positioned(
+                        top: 10,
+                        left: 10,
+                        right: 10,
+                        bottom: 10,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 20,
+                        left: 20,
+                        right: 20,
+                        bottom: 20,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Container(
                 child: (result != null)
                     ? Text("QR Data : ${result!.code}")
-                    : const Text("Scan a code"),
+                    : const Text(
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                        "Scan a code"),
               ),
               Container(
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(176, 131, 194, 242),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(100),
-                          topRight: Radius.circular(100),
-                          bottomLeft: Radius.circular(60),
-                          bottomRight: Radius.circular(60),
+                // child: ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //       backgroundColor: const Color.fromARGB(176, 131, 194, 242),
+                //       shape: const RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.only(
+                //           topLeft: Radius.circular(100),
+                //           topRight: Radius.circular(100),
+                //           bottomLeft: Radius.circular(60),
+                //           bottomRight: Radius.circular(60),
+                //         ),
+                //       ),
+                //       elevation: 10,
+                //       shadowColor: const Color.fromARGB(255, 0, 0, 0),
+                //       // minimumSize: const Size(60, 60),
+                //       // padding:
+                //       //     const EdgeInsets.fromLTRB(0, 0, 20, 0), // padding
+                //     ),
+                //     onPressed: () {},
+                //     child: const Text("Open In Bowser")),
+                child: (result != null &&
+                        (Uri.parse(result!.code.toString())
+                                .scheme
+                                .startsWith('http') ||
+                            Uri.parse(result!.code.toString())
+                                .scheme
+                                .startsWith('www')))
+                    ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(121, 131, 194, 242),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(100),
+                              topRight: Radius.circular(100),
+                              bottomLeft: Radius.circular(60),
+                              bottomRight: Radius.circular(60),
+                            ),
+                          ),
+                          elevation: 10,
+                          shadowColor: const Color.fromARGB(255, 0, 0, 0),
+                          // minimumSize: const Size(60, 60),
+                          // padding:
+                          //     const EdgeInsets.fromLTRB(0, 0, 20, 0), // padding
                         ),
-                      ),
-                      elevation: 10,
-                      shadowColor: const Color.fromARGB(255, 0, 0, 0),
-                      // minimumSize: const Size(60, 60),
-                      // padding:
-                      //     const EdgeInsets.fromLTRB(0, 0, 20, 0), // padding
-                    ),
-                    onPressed: () {},
-                    child: const Text("Open In Bowser")),
-                // child: (result != null &&
-                //         (Uri.parse(result!.code.toString())
-                //                 .scheme
-                //                 .startsWith('http') ||
-                //             Uri.parse(result!.code.toString())
-                //                 .scheme
-                //                 .startsWith('www')))
-                //     ? ElevatedButton(
-                //         onPressed: () => result != null
-                //             ? _urlLaunch(result!.code.toString())
-                //             : null,
-                //         child: const Text("open in browser"))
-                //     : Container(),
+                        onPressed: () => result != null
+                            ? _urlLaunch(result!.code.toString())
+                            : null,
+                        child: const Text(
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                            "Open In Browser"))
+                    : Container(),
               )
             ],
           ),
