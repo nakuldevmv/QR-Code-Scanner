@@ -21,14 +21,12 @@ class _qrscannerState extends State<qrscanner> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-          title: const Text(
-              style: TextStyle(color: Colors.white), "QR Code Scanner"),
+          title: const Text(style: TextStyle(color: Colors.white), "QR Code Scanner"),
           elevation: 0,
         ),
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         body: ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           child: Stack(
             children: [
               //
@@ -61,10 +59,8 @@ class _qrscannerState extends State<qrscanner> {
                                   topLeft: Radius.circular(20),
                                 ),
                                 border: Border(
-                                  top:
-                                      BorderSide(color: Colors.white, width: 5),
-                                  left:
-                                      BorderSide(color: Colors.white, width: 5),
+                                  top: BorderSide(color: Colors.white, width: 5),
+                                  left: BorderSide(color: Colors.white, width: 5),
                                 ),
                               ),
                             ),
@@ -80,10 +76,8 @@ class _qrscannerState extends State<qrscanner> {
                                   topRight: Radius.circular(20),
                                 ),
                                 border: Border(
-                                  top:
-                                      BorderSide(color: Colors.white, width: 5),
-                                  right:
-                                      BorderSide(color: Colors.white, width: 5),
+                                  top: BorderSide(color: Colors.white, width: 5),
+                                  right: BorderSide(color: Colors.white, width: 5),
                                 ),
                               ),
                             ),
@@ -99,10 +93,8 @@ class _qrscannerState extends State<qrscanner> {
                                   bottomLeft: Radius.circular(20),
                                 ),
                                 border: Border(
-                                  bottom:
-                                      BorderSide(color: Colors.white, width: 5),
-                                  left:
-                                      BorderSide(color: Colors.white, width: 5),
+                                  bottom: BorderSide(color: Colors.white, width: 5),
+                                  left: BorderSide(color: Colors.white, width: 5),
                                 ),
                               ),
                             ),
@@ -118,10 +110,8 @@ class _qrscannerState extends State<qrscanner> {
                                   bottomRight: Radius.circular(20),
                                 ),
                                 border: Border(
-                                  bottom:
-                                      BorderSide(color: Colors.white, width: 5),
-                                  right:
-                                      BorderSide(color: Colors.white, width: 5),
+                                  bottom: BorderSide(color: Colors.white, width: 5),
+                                  right: BorderSide(color: Colors.white, width: 5),
                                 ),
                               ),
                             ),
@@ -135,10 +125,7 @@ class _qrscannerState extends State<qrscanner> {
                         ? Container(
                             margin: EdgeInsets.all(5),
                             padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(113, 0, 0, 0),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
+                            decoration: BoxDecoration(color: const Color.fromARGB(113, 0, 0, 0), borderRadius: BorderRadius.all(Radius.circular(10))),
                             child: Center(
                               child: SelectableText(
                                 style: TextStyle(color: Colors.white),
@@ -150,46 +137,26 @@ class _qrscannerState extends State<qrscanner> {
                             //       " ${result!.code}"),
                             // ),
                             )
-                        : const Text(
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                            "Scan a code"),
+                        : const Text(style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white), "Scan a code"),
                   ),
                   Container(
-                    child: (result != null &&
-                            (Uri.parse(result!.code.toString())
-                                    .scheme
-                                    .startsWith('http') ||
-                                Uri.parse(result!.code.toString())
-                                    .scheme
-                                    .startsWith('www')))
+                    child: (result != null && (Uri.parse(result!.code.toString()).scheme.startsWith('http') || Uri.parse(result!.code.toString()).scheme.startsWith('www')))
                         ? ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(156, 0, 0, 0),
+                              backgroundColor: const Color.fromARGB(156, 0, 0, 0),
                               shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)
-                                        // topLeft: Radius.circular(100),
-                                        // topRight: Radius.circular(100),
-                                        // bottomLeft: Radius.circular(60),
-                                        // bottomRight: Radius.circular(60),
-                                        ),
+                                borderRadius: BorderRadius.all(Radius.circular(10)
+                                    // topLeft: Radius.circular(100),
+                                    // topRight: Radius.circular(100),
+                                    // bottomLeft: Radius.circular(60),
+                                    // bottomRight: Radius.circular(60),
+                                    ),
                               ),
                               elevation: 10,
                               shadowColor: const Color.fromARGB(255, 0, 0, 0),
                             ),
-                            onPressed: () => result != null
-                                ? _urlLaunch(result!.code.toString())
-                                : null,
-                            child: const Text(
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                                "Open In Browser"))
+                            onPressed: () => result != null ? _urlLaunch(result!.code.toString()) : null,
+                            child: const Text(style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white), "Open In Browser"))
                         : Container(),
 //
 //
