@@ -130,12 +130,7 @@ class _xsState extends State<xs> {
                                 style: const TextStyle(color: Colors.white),
                                 " ${result!.code}",
                               ),
-                            )
-                            //   child: Text(
-                            //       style: TextStyle(color: Colors.white),
-                            //       " ${result!.code}"),
-                            // ),
-                            )
+                            ))
                         : const Text(style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white), "Scan a code"),
                   ),
                   Container(
