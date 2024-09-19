@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_dart_scan/qr_code_dart_scan.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,9 +11,9 @@ class xs extends StatefulWidget {
 }
 
 class _xsState extends State<xs> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: "QR");
-  Barcode? result;
-  QRViewController? controller;
+  // final GlobalKey qrKey = GlobalKey(debugLabel: "QR");
+  String? result;
+  // QRViewController? controller;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,8 +29,44 @@ class _xsState extends State<xs> {
           borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           child: Stack(
             children: [
-              //
-              QRView(key: qrKey, onQRViewCreated: _onQRViewCreated),
+              //////
+              // QRView(key: qrKey, onQRViewCreated: _onQRViewCreated),
+
+              QRCodeDartScanView(
+                scanInvertedQRCode: true, // enable scan invert qr code ( default = false)
+
+                typeScan: TypeScan.live, // if TypeScan.takePicture will try decode when click to take a picture(default TypeScan.live)
+                // intervalScan: const Duration(seconds:1)
+                // onResultInterceptor: (old,new){
+                //  do any rule to controll onCapture.
+                // }
+                // takePictureButtonBuilder: (context,controller,isLoading){ // if typeScan == TypeScan.takePicture you can customize the button.
+                //    if(loading) return CircularProgressIndicator();
+                //    return ElevatedButton(
+                //       onPressed:controller.takePictureAndDecode,
+                //       child:Text('Take a picture'),
+                //    );
+                // }
+                // resolutionPreset: = QrCodeDartScanResolutionPreset.high,
+                // formats: [ // You can restrict specific formats.
+                //  BarcodeFormat.qrCode,
+                //  BarcodeFormat.aztec,
+                //  BarcodeFormat.dataMatrix,
+                //  BarcodeFormat.pdf417,
+                //  BarcodeFormat.code39,
+                //  BarcodeFormat.code93,
+                //  BarcodeFormat.code128,
+                //  BarcodeFormat.ean8,
+                //  BarcodeFormat.ean13,
+                // ],
+                onCapture: (Result result) {
+                  setState(() {
+                    this.result = result.text;
+                  });
+                },
+              ),
+
+              //////
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,13 +165,13 @@ class _xsState extends State<xs> {
                             child: Center(
                               child: SelectableText(
                                 style: const TextStyle(color: Colors.white),
-                                " ${result!.code}",
+                                " ${result!}",
                               ),
                             ))
                         : const Text(style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white), "Scan a code"),
                   ),
                   Container(
-                    child: (result != null && (Uri.parse(result!.code.toString()).scheme.startsWith('http') || Uri.parse(result!.code.toString()).scheme.startsWith('www')))
+                    child: (result != null && (Uri.parse(result!).scheme.startsWith('http') || Uri.parse(result!).scheme.startsWith('www')))
                         ? ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color.fromARGB(156, 0, 0, 0),
@@ -149,7 +186,7 @@ class _xsState extends State<xs> {
                               elevation: 10,
                               shadowColor: const Color.fromARGB(255, 0, 0, 0),
                             ),
-                            onPressed: () => result != null ? _urlLaunch(result!.code.toString()) : null,
+                            onPressed: () => result != null ? _urlLaunch(result!) : null,
                             child: const Text(style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white), "Open In Browser"))
                         : Container(),
 //
@@ -164,14 +201,14 @@ class _xsState extends State<xs> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
-    });
-  }
+  // void _onQRViewCreated(QRViewController controller) {
+  //   this.controller = controller;
+  //   controller.scannedDataStream.listen((scanData) {
+  //     setState(() {
+  //       result = scanData;
+  //     });
+  //   });
+  // }
 
   _urlLaunch(String string) async {
     await launchUrl(Uri.parse(string));
